@@ -1,12 +1,43 @@
+<!-- templates/index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="km">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bot Store</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Integration</title>
+    <script>
+        function redirectToTelegram() {
+            window.open("https://t.me/kaliptosal_c2", "_blank");
+        }
+
+        function submitMessage() {
+            const message = document.getElementById('message').value;
+            // Send the message to Python backend via a POST request
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `message=${encodeURIComponent(message)}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Message sent:', data);
+                alert('Message sent successfully!');
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
 </head>
 <body>
-  <h1>Welcome to the Bot Store!</h1>
-  <p>This is a test page for GitHub Pages.</p>
+    <h1>Welcome to Telegram Integration</h1>
+
+    <button onclick="redirectToTelegram()">Go to Telegram</button>
+
+    <form onsubmit="event.preventDefault(); submitMessage();">
+        <label for="message">Enter your message:</label>
+        <input type="text" id="message" name="message" required>
+        <button type="submit">Send Message</button>
+    </form>
 </body>
 </html>
